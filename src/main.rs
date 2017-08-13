@@ -1,4 +1,5 @@
 use std::any::{Any, TypeId};
+
 fn main() {
     equal_str();
     types_str();
@@ -9,9 +10,13 @@ fn main() {
     format_str();
     replace_str();
     trim_str();
+    to_i32_str();
+    start_and_end_str();
+    split_str();
+    join_str();
 }
 
-
+// returns true if T is String. Otherwise returns false.
 fn is_string<T: ?Sized + Any>(_s: &T) -> bool {
     TypeId::of::<String>() == TypeId::of::<T>()
 }
@@ -53,7 +58,9 @@ fn format_str() {
 }
 
 fn replace_str() {
-    assert_eq!("hello world!", "goodmorning world!".replace("goodmorning", "hello"));
+    let hello = "goodmorning world!".replace("goodmorning", "hello");
+    assert_eq!("hello world!", hello);
+    assert!(is_string(&hello));
 }
 
 fn trim_str() {
@@ -61,4 +68,26 @@ fn trim_str() {
     assert_eq!("hello world!", hello.trim());
     assert_eq!("hello world! ", hello.trim_left());
     assert_eq!("\nhello world!", hello.trim_right());
+}
+
+fn to_i32_str() {
+    use std::str::FromStr;
+    assert_eq!(123, i32::from_str("123").unwrap());
+}
+
+fn start_and_end_str() {
+    assert!("abcdefg".starts_with("abc"));
+    assert!("abcdefg".ends_with("fg"));
+
+    assert!(!"abcdefg".starts_with("cd"));
+    assert!(!"abcdefg".ends_with("fg "));
+}
+
+fn split_str() {
+    let v: Vec<&str> = "I have a pen".split(' ').collect();
+    assert_eq!(v, ["I", "have", "a", "pen"]);
+}
+
+fn join_str() {
+    assert_eq!(["hello", "world"].join(" "), "hello world");
 }
