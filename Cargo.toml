@@ -1,0 +1,6 @@
+[package]
+name = "string examples"
+version = "0.1.0"
+authors = ["kakkunpakkun"]
+
+[dependencies]
